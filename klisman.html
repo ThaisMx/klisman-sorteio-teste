@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pagamento Concluído - Viva Sorte</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        background-color: #007bff;
+        padding: 10px;
+      }
+      .header img {
+        max-width: 100%;
+        height: auto;
+      }
+      h2 {
+        color: #007bff;
+        font-size: 24px;
+      }
+      p {
+        font-size: 16px;
+        color: #555;
+      }
+      .tickets {
+        margin: 20px 0;
+      }
+      .ticket {
+        display: inline-block;
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px;
+        margin: 5px;
+        font-size: 18px;
+        border-radius: 5px;
+      }
+      .footer {
+        background-color: #f9f9f9;
+        padding: 10px;
+        font-size: 12px;
+        color: #aaa;
+      }
+      .footer img {
+        width: 100px;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <img
+          src="https://titulo-vivasorte.com/wp-content/uploads/2024/04/logo.svg"
+          alt="Viva Sorte Logo"
+        />
+      </div>
+      <h2>Pagamento Concluído!</h2>
+      <p>Você irá receber no seu e-mail os números da sorte!</p>
+      <h2>SEUS BILHETES GERADOS!</h2>
+      <p id="data-hora">Gerando...</p>
+      <div class="tickets">
+        <div class="ticket" id="N1">Gerando...</div>
+        <div class="ticket" id="N2">Gerando...</div>
+        <div class="ticket" id="N3">Gerando...</div>
+        <div class="ticket" id="N4">Gerando...</div>
+        <div class="ticket" id="N5">Gerando...</div>
+        <div class="ticket" id="N6">Gerando...</div>
+        <div class="ticket" id="N7">Gerando...</div>
+        <div class="ticket" id="N8">Gerando...</div>
+        <div class="ticket" id="N9">Gerando...</div>
+        <div class="ticket" id="N10">Gerando...</div>
+      </div>
+      <div class="footer">
+        <p>
+          Sorteios lastreados por Títulos de Capitalização, da Modalidade
+          Incentivo, emitidos pela VIA Capitalização S.A, inscrita no CNPJ sob
+          nº 88.076.302/0001-94, e aprovados pela SUSEP através do registro na
+          SUSEP Sorteio n° 15414.652257/2023-51. O valor das premiações aqui
+          indicados são líquidos, já descontado o devido imposto de renda de
+          25%. O registro deste plano na SUSEP não implica, por parte da
+          Autarquia, incentivo ou recomendação a sua comercialização.
+        </p>
+        <img
+          src="https://titulo-vivasorte.com/wp-content/uploads/2024/04/viacap.png"
+          alt="ViaCap"
+        />
+        <img
+          src="https://titulo-vivasorte.com/wp-content/uploads/2024/04/viva.png"
+          alt="Viva"
+        />
+        <img
+          src="https://titulo-vivasorte.com/wp-content/uploads/2024/04/edjdigital.webp"
+          alt="EDJ Digital"
+        />
+      </div>
+    </div>
+    <script>
+      function gerarCodigo() {
+        let codigo = ""
+        for (let i = 0; i < 8; i++) {
+          codigo += Math.floor(Math.random() * 10)
+        }
+        return codigo
+      }
+
+      function setCookie(name, value, days) {
+        const date = new Date()
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
+        const expires = "expires=" + date.toUTCString()
+        document.cookie = name + "=" + value + ";" + expires + ";path=/"
+      }
+
+      function getCookie(name) {
+        const cname = name + "="
+        const decodedCookie = decodeURIComponent(document.cookie)
+        const ca = decodedCookie.split(";")
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i]
+          while (c.charAt(0) == " ") {
+            c = c.substring(1)
+          }
+          if (c.indexOf(cname) == 0) {
+            return c.substring(cname.length, c.length)
+          }
+        }
+        return ""
+      }
+
+      function inserirCodigos() {
+        for (let i = 1; i <= 10; i++) {
+          let codigo = getCookie("N" + i)
+          if (codigo == "") {
+            codigo = gerarCodigo()
+            setCookie("N" + i, codigo, 365)
+          }
+          document.getElementById("N" + i).textContent = codigo
+        }
+      }
+
+      function atualizarDataHora() {
+        const dataHoraElemento = document.getElementById("data-hora")
+        const dataHoraAtual = new Date()
+        const dataFormatada = dataHoraAtual.toLocaleDateString("pt-BR")
+        const horaFormatada = dataHoraAtual.toLocaleTimeString("pt-BR")
+        dataHoraElemento.textContent = `Bilhetes Gerados - Data: ${dataFormatada} | Hora: ${horaFormatada}`
+      }
+
+      window.onload = function () {
+        inserirCodigos()
+        atualizarDataHora()
+      }
+    </script>
+  </body>
+</html>
